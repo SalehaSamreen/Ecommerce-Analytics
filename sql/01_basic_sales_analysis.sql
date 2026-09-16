@@ -20,3 +20,13 @@ FROM sales;
 SELECT
     COUNT(DISTINCT "Customer ID") AS total_customers
 FROM sales;
+
+-- Monthly Sales and Profit Analysis
+
+SELECT
+    strftime('%Y-%m', "Order Date") AS month,
+    ROUND(SUM(Sales), 2) AS total_sales,
+    ROUND(SUM(Profit), 2) AS total_profit
+FROM sales
+GROUP BY month
+ORDER BY month;

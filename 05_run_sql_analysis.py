@@ -58,6 +58,25 @@ total_customers = cursor.fetchone()[0]
 print("\n4. Total Customers:")
 print(total_customers)
 
+# 5. Monthly Sales and Profit
+cursor.execute("""
+    SELECT
+        strftime('%Y-%m', "Order Date") AS month,
+        ROUND(SUM(Sales), 2) AS total_sales,
+        ROUND(SUM(Profit), 2) AS total_profit
+    FROM sales
+    GROUP BY month
+    ORDER BY month
+""")
+
+monthly_results = cursor.fetchall()
+
+print("\n5. Monthly Sales and Profit:")
+print("Month       Sales          Profit")
+
+for month, sales, profit in monthly_results:
+    print(f"{month}   {sales:,.2f}      {profit:,.2f}")
+
 
 # Close database connection
 connection.close()
